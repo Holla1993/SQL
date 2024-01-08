@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   wordpress:
@@ -8,14 +8,34 @@ services:
       - "8080:80"
     environment:
       WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: holla
-      WORDPRESS_DB_NAME: db
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_password
+      WORDPRESS_DB_NAME: wp_database
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - holla
+      - wordpress_net
 
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: holla
-      MYSQL_DATABASE: db
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: wp_database
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: wp_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - holla
+      - wordpress_net
 
+networks:
+  holla:
+    external: true
+  wordpress_net:
+
+volumes:
+  wordpress_data:
+  mysql_data:
