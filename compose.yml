@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress
+    deploy:
+      replicas: 10
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: holla
+      WORDPRESS_DB_NAME: wp_database
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - holla
+      - wordpress_net
+
+  mysql:
+    image: mysql:8.0
+    deploy:
+      replicas: 10
+      restart_policy:
+        condition: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wp_database
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - holla
+      - wordpress_net
+
+networks:
+  holla:
+    external: true
+  wordpress_net:
+
+volumes:
+  wordpress_data:
+  mysql_data:
