@@ -8,7 +8,7 @@ services:
       - "8080:80"
     environment:
       WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_USER: sindhu
       WORDPRESS_DB_PASSWORD: holla
       WORDPRESS_DB_NAME: db
     volumes:
@@ -19,7 +19,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: db
-      MYSQL_USER: root
+      MYSQL_USER: sindhu
       MYSQL_PASSWORD: holla
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
