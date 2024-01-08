@@ -27,7 +27,7 @@ services:
 
 networks:
   default:
-    external:
+    external: true
       name: holla
 
 volumes:
